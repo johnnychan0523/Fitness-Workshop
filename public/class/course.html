@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>課程介紹 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .page-header h1 {
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .page-header p { color: #6b7280; margin-top: 12px; font-size: 16px; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 48px 20px 80px; display: flex; flex-direction: column; gap: 28px; }
+
+    .course-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .course-card:hover { border-color: rgba(234,88,12,.4); box-shadow: 0 8px 24px rgba(234,88,12,.12); }
+
+    .course-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 28px 20px;
+      border-left: 4px solid;
+    }
+    .upper .course-header { border-color: #f59e0b; }
+    .lower  .course-header { border-color: #38bdf8; }
+    .core   .course-header { border-color: #ea580c; }
+    .air    .course-header { border-color: #a78bfa; }
+    .other  .course-header { border-color: #4ade80; }
+
+    .course-icon { font-size: 28px; }
+    .course-title { font-size: 22px; font-weight: 700; color: #111827; }
+    .course-price {
+      margin-left: auto;
+      font-size: 13px;
+      color: #ea580c;
+      background: rgba(234,88,12,.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      border: 1px solid rgba(234,88,12,.2);
+    }
+
+    .course-desc {
+      padding: 0 28px 20px;
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.8;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .sub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px 28px;
+    }
+    .sub-link {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 20px;
+      min-width: 140px;
+      transition: all .2s;
+    }
+    .sub-link:hover {
+      background: rgba(234,88,12,.06);
+      border-color: rgba(234,88,12,.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(234,88,12,.1);
+    }
+    .sub-link-title { font-size: 15px; font-weight: 700; color: #111827; }
+    .sub-link-desc  { font-size: 12px; color: #6b7280; margin-top: 4px; }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="page-header">
+  <h1>課程介紹</h1>
+  <p>五大訓練類別，由專業教練量身規劃，適合各程度學員</p>
+</div>
+
+<div class="container">
+
+  <!-- 上肢 -->
+  <div class="course-card upper">
+    <div class="course-header">
+      <span class="course-icon">💪</span>
+      <span class="course-title">上肢課程</span>
+      <span class="course-price">NT$ 500 / 小時</span>
+    </div>
+    <div class="course-desc">
+      提升上肢力量與靈活性，全面訓練肩膀、手臂、背部和核心肌群。課程結合重量訓練、核心穩定性練習、柔軟度與協調性活動。
+    </div>
+    <div class="sub-links">
+      <a class="sub-link" href="upper1.html">
+        <span class="sub-link-title">肩膀訓練</span>
+        <span class="sub-link-desc">三角肌・旋轉袖肌</span>
+      </a>
+      <a class="sub-link" href="upper2.html">
+        <span class="sub-link-title">手臂訓練</span>
+        <span class="sub-link-desc">肱二頭肌・肱三頭肌</span>
+      </a>
+      <a class="sub-link" href="upper3.html">
+        <span class="sub-link-title">背部訓練</span>
+        <span class="sub-link-desc">闊背肌・菱形肌</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 下肢 -->
+  <div class="course-card lower">
+    <div class="course-header">
+      <span class="course-icon">🦵</span>
+      <span class="course-title">下肢課程</span>
+      <span class="course-price">NT$ 500 / 小時</span>
+    </div>
+    <div class="course-desc">
+      強化下肢肌肉群，增進腿部力量與穩定性。涵蓋大腿、小腿與臀部訓練，改善姿勢與運動表現，提升日常生活品質。
+    </div>
+    <div class="sub-links">
+      <a class="sub-link" href="lower1.html">
+        <span class="sub-link-title">大腿訓練</span>
+        <span class="sub-link-desc">深蹲・腿推・四頭肌</span>
+      </a>
+      <a class="sub-link" href="lower2.html">
+        <span class="sub-link-title">小腿訓練</span>
+        <span class="sub-link-desc">提踵・腓腸肌</span>
+      </a>
+      <a class="sub-link" href="lower3.html">
+        <span class="sub-link-title">臀部訓練</span>
+        <span class="sub-link-desc">硬舉・臀推・臀大肌</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 核心 -->
+  <div class="course-card core">
+    <div class="course-header">
+      <span class="course-icon">🔥</span>
+      <span class="course-title">核心課程</span>
+      <span class="course-price">NT$ 800 / 小時</span>
+    </div>
+    <div class="course-desc">
+      深層核心強化訓練，提升脊椎穩定性與平衡感。有效改善體態、減少運動傷害風險，為其他訓練建立扎實基礎。
+    </div>
+    <div class="sub-links">
+      <a class="sub-link" href="main1.html">
+        <span class="sub-link-title">腹部訓練</span>
+        <span class="sub-link-desc">仰臥起坐・平板支撐</span>
+      </a>
+      <a class="sub-link" href="main2.html">
+        <span class="sub-link-title">腰部訓練</span>
+        <span class="sub-link-desc">側彎・舉腿</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 有氧 -->
+  <div class="course-card air">
+    <div class="course-header">
+      <span class="course-icon">🏃</span>
+      <span class="course-title">有氧課程</span>
+      <span class="course-price">NT$ 600 / 小時</span>
+    </div>
+    <div class="course-desc">
+      提升心肺耐力與脂肪燃燒效率。有氧訓練種類多樣，適合不同體能程度，是減重與增強體能最有效的方式之一。
+    </div>
+    <div class="sub-links">
+      <a class="sub-link" href="air1.html">
+        <span class="sub-link-title">慢跑訓練</span>
+        <span class="sub-link-desc">姿勢・配速・技巧</span>
+      </a>
+      <a class="sub-link" href="air2.html">
+        <span class="sub-link-title">游泳訓練</span>
+        <span class="sub-link-desc">自由式・蝶式</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 其他 -->
+  <div class="course-card other">
+    <div class="course-header">
+      <span class="course-icon">🧘</span>
+      <span class="course-title">其他課程</span>
+      <span class="course-price">NT$ 600 / 小時</span>
+    </div>
+    <div class="course-desc">
+      瑜珈、普拉提、徒步等多元訓練項目，著重柔軟度、平衡感與身心放鬆，適合各年齡層與健身程度的學員。
+    </div>
+    <div class="sub-links">
+      <a class="sub-link" href="other1.html">
+        <span class="sub-link-title">瑜珈訓練</span>
+        <span class="sub-link-desc">下犬式・戰士式</span>
+      </a>
+      <a class="sub-link" href="other2.html">
+        <span class="sub-link-title">普拉提訓練</span>
+        <span class="sub-link-desc">百式・鳥犬式</span>
+      </a>
+      <a class="sub-link" href="other3.html">
+        <span class="sub-link-title">徒步訓練</span>
+        <span class="sub-link-desc">快步走・登山步行</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>&copy; 2024 健身工作坊. All rights reserved.</footer>
+</body>
+</html>

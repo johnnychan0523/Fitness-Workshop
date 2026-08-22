@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首頁 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 80px;
+      background: radial-gradient(ellipse at top, rgba(234,88,12,0.08) 0%, transparent 60%);
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #6b7280;
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .25s;
+    }
+    .btn-primary {
+      background: #ea580c;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #c2410c; box-shadow: 0 4px 20px rgba(234,88,12,.3); }
+    .btn-outline {
+      border: 1px solid #ea580c;
+      color: #ea580c;
+    }
+    .btn-outline:hover { background: rgba(234,88,12,.08); }
+
+    .section { padding: 64px 20px; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+    .section-sub { color: #6b7280; margin-bottom: 40px; font-size: 15px; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .card:hover {
+      border-color: rgba(234,88,12,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(234,88,12,.15);
+    }
+    .card-icon { font-size: 32px; }
+    .card-title { font-size: 18px; font-weight: 700; color: #111827; }
+    .card-desc { font-size: 14px; color: #6b7280; line-height: 1.7; }
+    .card-link { font-size: 13px; color: #ea580c; margin-top: auto; }
+
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .price-table th, .price-table td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 15px;
+    }
+    .price-table th { color: #ea580c; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; background: #fff; }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:hover td { background: rgba(234,88,12,.04); }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="hero">
+  <div class="hero-kicker">TRAIN WITH PURPOSE</div>
+  <h1 id="greeting">把每一次訓練<br><span>練成看得見的進步</span></h1>
+  <p>從訓練方向、動作內容到居家器材，一次找到適合自己的健身方式。現在開始，讓每一次流汗都有目的。</p>
+  <div class="hero-btns">
+    <a href="/class/course.html" class="btn btn-primary">開始選擇課程</a>
+    <a href="/index1.html" class="btn btn-outline">認識教練團隊</a>
+  </div>
+  <div class="hero-stats" aria-label="網站內容統計">
+    <div class="hero-stat"><strong>5</strong><span>訓練類別</span></div>
+    <div class="hero-stat"><strong>12</strong><span>動作主題</span></div>
+    <div class="hero-stat"><strong>4</strong><span>專業成員</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">快速導覽</h2>
+  <p class="section-sub">依照你的目標，快速找到需要的內容</p>
+  <div class="cards">
+    <a class="card" href="/class/course.html">
+      <div class="card-icon">🏋️</div>
+      <div class="card-title">課程介紹</div>
+      <div class="card-desc">上肢、下肢、核心、有氧、其他，五大課程分類，由專業教練帶領訓練。</div>
+      <div class="card-link">查看課程 →</div>
+    </a>
+    <a class="card" href="/equipment.html">
+      <div class="card-icon">🛒</div>
+      <div class="card-title">器材購買</div>
+      <div class="card-desc">從啞鈴到跑步機，精選健身器材，幫助你在家也能有效訓練。</div>
+      <div class="card-link">選購器材 →</div>
+    </a>
+    <a class="card" href="/index1.html">
+      <div class="card-icon">👥</div>
+      <div class="card-title">關於我們</div>
+      <div class="card-desc">認識我們的專業教練團隊，包括營養師、有氧專家和重量訓練教練。</div>
+      <div class="card-link">認識教練 →</div>
+    </a>
+    <a class="card" href="/connection/connection1.html">
+      <div class="card-icon">📞</div>
+      <div class="card-title">聯絡我們</div>
+      <div class="card-desc">有任何問題？歡迎致電或填寫回饋問卷，我們竭誠為您服務。</div>
+      <div class="card-link">立即聯絡 →</div>
+    </a>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">課程價目表</h2>
+  <p class="section-sub">所有課程均為一對一專業指導</p>
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>課程名稱</th>
+        <th>時長</th>
+        <th>價格</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>上肢課程</td><td>1 小時</td><td>NT$ 500</td></tr>
+      <tr><td>下肢課程</td><td>1 小時</td><td>NT$ 500</td></tr>
+      <tr><td>核心課程</td><td>1 小時</td><td>NT$ 800</td></tr>
+      <tr><td>有氧課程</td><td>1 小時</td><td>NT$ 600</td></tr>
+      <tr><td>其他課程</td><td>1 小時</td><td>NT$ 600</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>&copy; 2026 健身工作坊</footer>
+<script>
+  fetch('/me')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data && data.帳號) {
+        const greeting = document.getElementById('greeting');
+        greeting.textContent = `歡迎回來，${data.帳號}`;
+        greeting.appendChild(document.createElement('br'));
+        const message = document.createElement('span');
+        message.textContent = '今天也往前一步';
+        greeting.appendChild(message);
+      }
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

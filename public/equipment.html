@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>器材購買 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .page-header h1 {
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .page-header p { color: #6b7280; margin-top: 12px; font-size: 16px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 48px 20px 80px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .card:hover {
+      border-color: rgba(234,88,12,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(234,88,12,.15);
+    }
+    .card-top { display: flex; align-items: center; gap: 14px; }
+    .card-icon { font-size: 36px; }
+    .card-name { font-size: 20px; font-weight: 700; color: #111827; }
+    .card-tag {
+      font-size: 12px;
+      color: #ea580c;
+      background: rgba(234,88,12,.1);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 4px;
+      border: 1px solid rgba(234,88,12,.2);
+    }
+    .card-desc { font-size: 14px; color: #6b7280; line-height: 1.8; }
+    .card-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ea580c;
+      padding-top: 10px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .card-price span { font-size: 13px; color: #6b7280; font-weight: 400; margin-left: 4px; }
+    .btn-buy {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid #ea580c;
+      border-radius: 8px;
+      color: #ea580c;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+    .btn-buy:hover { background: #ea580c; color: #fff; }
+    .btn-buy:disabled { opacity: .5; cursor: not-allowed; }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+
+    #float-cart {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #ea580c;
+      color: #fff;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(234,88,12,.45);
+      z-index: 998;
+      transition: transform .2s, box-shadow .2s;
+    }
+    #float-cart:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(234,88,12,.6); }
+    #float-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #e53e3e;
+      color: #fff;
+      border-radius: 50%;
+      min-width: 20px;
+      height: 20px;
+      font-size: 11px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      font-family: 'Noto Sans TC', Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .qty-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .qty-row label { font-size:13px; color:#6b7280; }
+    .qty-ctrl { display:flex; align-items:center; gap:6px; }
+    .q-btn { width:28px; height:28px; border-radius:6px; border:1px solid #d1d5db; background:#f9fafb; color:#111827; font-size:15px; cursor:pointer; transition:border-color .2s; }
+    .q-btn:hover { border-color:#ea580c; color:#ea580c; }
+    .qty-input { width:48px; text-align:center; background:#fff; border:1px solid #d1d5db; border-radius:6px; color:#111827; font-size:14px; padding:4px; }
+    .qty-input::-webkit-inner-spin-button { -webkit-appearance:none; }
+    .toast { position:fixed; bottom:30px; right:30px; background:#ea580c; color:#fff; padding:14px 22px; border-radius:10px; font-size:15px; box-shadow:0 4px 20px rgba(0,0,0,.15); opacity:0; transform:translateY(10px); transition:all .35s; pointer-events:none; z-index:9999; }
+    .toast.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="page-header">
+  <h1>器材購買</h1>
+  <p>精選專業健身器材，在家也能擁有健身房等級訓練</p>
+</div>
+
+<div class="container">
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🏋️</span>
+        <div>
+          <div class="card-name">啞鈴組</div>
+          <span class="card-tag">初學者 / 進階</span>
+        </div>
+      </div>
+      <div class="card-desc">適合各種上肢訓練動作，可調式啞鈴節省空間，適合居家與健身房使用。多種重量規格可選。</div>
+      <div class="card-price">NT$ 1,500 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-啞鈴組" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '啞鈴組')">加入購物車</button>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🔩</span>
+        <div>
+          <div class="card-name">槓鈴組</div>
+          <span class="card-tag">中階 / 進階</span>
+        </div>
+      </div>
+      <div class="card-desc">全身訓練的核心器材，包含槓鈴桿、槓片與架台。適合深蹲、臥推、硬舉等複合動作。</div>
+      <div class="card-price">NT$ 3,000 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-槓鈴組" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '槓鈴組')">加入購物車</button>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🏃</span>
+        <div>
+          <div class="card-name">跑步機</div>
+          <span class="card-tag">有氧 / 心肺</span>
+        </div>
+      </div>
+      <div class="card-desc">室內有氧首選，可調速度與坡度，提供跑步數據即時追蹤。靜音設計，適合公寓使用。</div>
+      <div class="card-price">NT$ 15,000 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-跑步機" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '跑步機')">加入購物車</button>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🦵</span>
+        <div>
+          <div class="card-name">腿推機</div>
+          <span class="card-tag">下肢訓練</span>
+        </div>
+      </div>
+      <div class="card-desc">針對大腿四頭肌、臀大肌的專業器材，減少腰椎壓力，安全有效地訓練下肢力量。</div>
+      <div class="card-price">NT$ 8,000 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-腿推機" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '腿推機')">加入購物車</button>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🚴</span>
+        <div>
+          <div class="card-name">飛輪單車</div>
+          <span class="card-tag">有氧 / 燃脂</span>
+        </div>
+      </div>
+      <div class="card-desc">模擬戶外騎行體驗，可調阻力，高效燃脂不傷膝蓋，適合各年齡層的有氧訓練。</div>
+      <div class="card-price">NT$ 5,000 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-飛輪單車" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '飛輪單車')">加入購物車</button>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-icon">🧘</span>
+        <div>
+          <div class="card-name">瑜珈墊套組</div>
+          <span class="card-tag">瑜珈 / 核心</span>
+        </div>
+      </div>
+      <div class="card-desc">高密度防滑材質，提供良好緩衝與支撐。套組含瑜珈磚、伸展帶，適合各種地板運動。</div>
+      <div class="card-price">NT$ 300 <span>起</span></div>
+      <div class="qty-row">
+      <label>數量</label>
+      <div class="qty-ctrl">
+        <button type="button" class="q-btn" onclick="this.nextElementSibling.stepDown()">−</button>
+        <input type="number" class="qty-input" id="qty-瑜珈墊套組" value="1" min="1" max="99">
+        <button type="button" class="q-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+      </div>
+    </div>
+    <button class="btn-buy" onclick="addToCart(this, '瑜珈墊套組')">加入購物車</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<a id="float-cart" href="/cart.html" title="前往購物車" aria-label="前往購物車">
+  🛒
+  <span id="float-badge"></span>
+</a>
+
+<script>
+  async function addToCart(btn, item) {
+    const qtyEl = document.getElementById('qty-' + item);
+    const qty = Math.min(99, Math.max(1, parseInt(qtyEl ? qtyEl.value : 1, 10) || 1));
+    btn.disabled = true;
+    btn.textContent = '加入中…';
+    try {
+      const response = await fetch('/cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 器材: item, 數量: qty })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        showToast('請先登入會員，即將前往登入頁', true);
+        setTimeout(() => window.location.assign('/loginpage?next=/equipment.html'), 900);
+        return;
+      }
+      if (!response.ok || !data.success) throw new Error(data.message || '加入購物車失敗');
+
+      showToast(data.message);
+      btn.textContent = '✓ 已加入';
+      updateCartBadge();
+      setTimeout(() => {
+        btn.textContent = '加入購物車';
+        btn.disabled = false;
+      }, 1500);
+    } catch (error) {
+      showToast(error.message || '發生錯誤，請稍後再試', true);
+      btn.textContent = '加入購物車';
+      btn.disabled = false;
+    }
+  }
+
+  function showToast(msg, isError) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = isError ? '#e53e3e' : '#ea580c';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function updateCartBadge() {
+    fetch('/cart/count').then(r => r.json()).then(d => {
+      const b = document.getElementById('cart-badge');
+      if (window.updateSharedCartBadge) window.updateSharedCartBadge(Number(d.count) || 0);
+      else if (b) {
+        b.textContent = d.count > 0 ? d.count : '';
+        b.style.display = d.count > 0 ? 'flex' : 'none';
+      }
+      const fb = document.getElementById('float-badge');
+      if (fb) {
+        fb.textContent = d.count > 0 ? d.count : '';
+        fb.style.display = d.count > 0 ? 'flex' : 'none';
+      }
+    });
+  }
+
+  updateCartBadge();
+</script>
+
+<footer>&copy; 2024 健身工作坊. All rights reserved.</footer>
+</body>
+</html>

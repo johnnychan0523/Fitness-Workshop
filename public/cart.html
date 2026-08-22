@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物車 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .page-header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #e5e7eb; }
+    .page-header h1 {
+      font-size: 36px; font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .page-header p { color: #6b7280; margin-top: 10px; font-size: 15px; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px 100px; }
+
+    .empty-state {
+      text-align: center; padding: 80px 20px;
+      color: #6b7280; font-size: 16px;
+    }
+    .empty-state .icon { font-size: 56px; margin-bottom: 16px; }
+    .empty-state a {
+      display: inline-block; margin-top: 20px; padding: 11px 24px;
+      background: #ea580c; color: #fff; border-radius: 8px;
+      text-decoration: none; font-weight: 600; transition: background .2s;
+    }
+    .empty-state a:hover { background: #c2410c; }
+
+    .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .cart-table th {
+      text-align: left; padding: 12px 16px;
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+    }
+    .cart-table td { padding: 18px 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+    .cart-table tr:last-child td { border-bottom: none; }
+    .cart-table tr:hover td { background: rgba(234,88,12,.03); }
+
+    .item-name { font-size: 16px; font-weight: 600; color: #111827; }
+    .item-price { color: #6b7280; font-size: 14px; margin-top: 4px; }
+
+    .qty-control { display: flex; align-items: center; gap: 8px; }
+    .qty-btn {
+      width: 30px; height: 30px; border-radius: 6px;
+      border: 1px solid #d1d5db; background: #f9fafb;
+      color: #111827; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s;
+    }
+    .qty-btn:hover { border-color: #ea580c; color: #ea580c; }
+    .qty-num { min-width: 32px; text-align: center; font-size: 15px; font-weight: 600; }
+
+    .subtotal { font-size: 16px; font-weight: 700; color: #ea580c; }
+    .btn-remove {
+      background: none; border: none; cursor: pointer;
+      color: #9ca3af; font-size: 18px; padding: 4px;
+      transition: color .2s;
+    }
+    .btn-remove:hover { color: #e53e3e; }
+
+    .summary {
+      background: #ffffff; border: 1px solid #e5e7eb;
+      border-radius: 14px; padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .summary-row {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb; font-size: 15px;
+      color: #374151;
+    }
+    .summary-row:last-of-type { border-bottom: none; }
+    .summary-label { color: #6b7280; }
+    .summary-total {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 20px 0 24px;
+      font-size: 20px; font-weight: 700;
+    }
+    .total-amount { color: #ea580c; }
+
+    .btn-checkout {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      background: #ea580c; color: #fff; font-size: 16px;
+      font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: all .25s;
+    }
+    .btn-checkout:hover { background: #c2410c; box-shadow: 0 4px 20px rgba(234,88,12,.35); }
+    .btn-checkout:disabled { opacity: .5; cursor: not-allowed; }
+
+    .orders-section { margin-top: 60px; }
+    .orders-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: #111827; }
+    .order-card {
+      background: #ffffff; border: 1px solid #e5e7eb;
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .order-header { display: flex; justify-content: space-between; align-items: center; }
+    .order-id { font-size: 14px; color: #6b7280; }
+    .order-amount { font-size: 18px; font-weight: 700; color: #ea580c; }
+    .order-status {
+      display: inline-block; margin-top: 8px;
+      font-size: 12px; padding: 3px 10px; border-radius: 20px;
+      background: rgba(234,88,12,.1); color: #ea580c;
+      border: 1px solid rgba(234,88,12,.2);
+    }
+    .order-time { font-size: 13px; color: #6b7280; margin-top: 6px; }
+    .btn-del-order {
+      background: none; border: 1px solid #d1d5db; border-radius: 6px;
+      color: #6b7280; font-size: 12px; padding: 4px 10px; cursor: pointer;
+      transition: all .2s; font-family: inherit; margin-top: 12px;
+    }
+    .btn-del-order:hover { border-color: #e53e3e; color: #e53e3e; }
+
+    .toast {
+      position: fixed; bottom: 30px; right: 30px;
+      background: #ea580c; color: #fff; padding: 14px 22px;
+      border-radius: 10px; font-size: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      opacity: 0; transform: translateY(10px);
+      transition: all .35s; pointer-events: none; z-index: 9999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* Checkout success modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10000;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: all; }
+    .modal-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.2);
+      transform: scale(.92);
+      transition: transform .3s;
+    }
+    .modal-overlay.show .modal-card { transform: scale(1); }
+    .modal-check {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 36px; color: #fff;
+    }
+    .modal-title { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 10px; }
+    .modal-order-id { font-size: 15px; color: #6b7280; margin-bottom: 28px; }
+    .modal-close {
+      display: inline-block; padding: 12px 32px;
+      background: #ea580c; color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: background .2s;
+    }
+    .modal-close:hover { background: #c2410c; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="page-header">
+  <h1>購物車</h1>
+  <p id="cart-subtitle">載入中...</p>
+</div>
+
+<div class="container">
+  <div id="cart-content"></div>
+
+  <div class="orders-section">
+    <div class="orders-title">我的訂單紀錄</div>
+    <div id="orders-content"><p style="color:#6b7280">載入中...</p></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Checkout success modal -->
+<div class="modal-overlay" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+  <div class="modal-card">
+    <div class="modal-check">✓</div>
+    <div class="modal-title" id="checkout-title">訂單成立！</div>
+    <div class="modal-order-id" id="modal-order-id">訂單編號 #----</div>
+    <button class="modal-close" onclick="closeModal()">關閉</button>
+  </div>
+</div>
+
+<script>
+  let cartItems = [];
+
+  function showToast(msg, isError) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = isError ? '#e53e3e' : '#ea580c';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function showCheckoutModal(orderId) {
+    document.getElementById('modal-order-id').textContent = '訂單編號 #' + orderId;
+    document.getElementById('checkout-modal').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('checkout-modal').classList.remove('show');
+  }
+
+  document.getElementById('checkout-modal').addEventListener('click', event => {
+    if (event.target.id === 'checkout-modal') closeModal();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeModal();
+  });
+
+  function formatPrice(n) {
+    return 'NT$ ' + n.toLocaleString();
+  }
+
+  function renderCart() {
+    const el = document.getElementById('cart-content');
+    const subtitle = document.getElementById('cart-subtitle');
+
+    if (!cartItems.length) {
+      subtitle.textContent = '購物車是空的';
+      el.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">🛒</div>
+          <div>購物車目前沒有商品</div>
+          <a href="/equipment.html">去逛器材</a>
+        </div>`;
+      return;
+    }
+
+    const total = cartItems.reduce((s, i) => s + i.單價 * i.數量, 0);
+    subtitle.textContent = `共 ${cartItems.reduce((s,i)=>s+i.數量,0)} 件商品`;
+
+    el.innerHTML = `
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>商品</th>
+            <th>數量</th>
+            <th>小計</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${cartItems.map(item => `
+            <tr id="row-${item.id}">
+              <td>
+                <div class="item-name">${item.器材}</div>
+                <div class="item-price">${formatPrice(item.單價)} / 件</div>
+              </td>
+              <td>
+                <div class="qty-control">
+                  <button class="qty-btn" onclick="changeQty(${item.id}, ${item.數量 - 1})">−</button>
+                  <span class="qty-num" id="qty-${item.id}">${item.數量}</span>
+                  <button class="qty-btn" onclick="changeQty(${item.id}, ${item.數量 + 1})">+</button>
+                </div>
+              </td>
+              <td><span class="subtotal" id="sub-${item.id}">${formatPrice(item.單價 * item.數量)}</span></td>
+              <td><button class="btn-remove" onclick="removeItem(${item.id})" title="移除">✕</button></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="summary">
+        ${cartItems.map(i => `
+          <div class="summary-row">
+            <span class="summary-label">${i.器材} × ${i.數量}</span>
+            <span>${formatPrice(i.單價 * i.數量)}</span>
+          </div>`).join('')}
+        <div class="summary-total">
+          <span>總計</span>
+          <span class="total-amount" id="total">${formatPrice(total)}</span>
+        </div>
+        <button class="btn-checkout" onclick="checkout()">確認結帳</button>
+      </div>`;
+  }
+
+  function changeQty(id, newQty) {
+    if (newQty < 1) return;
+    fetch(`/cart/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 數量: newQty })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        const item = cartItems.find(i => i.id === id);
+        item.數量 = newQty;
+        document.getElementById(`qty-${id}`).textContent = newQty;
+        document.getElementById(`sub-${id}`).textContent = formatPrice(item.單價 * newQty);
+        const total = cartItems.reduce((s, i) => s + i.單價 * i.數量, 0);
+        document.getElementById('total').textContent = formatPrice(total);
+        document.getElementById('cart-subtitle').textContent =
+          `共 ${cartItems.reduce((s,i)=>s+i.數量,0)} 件商品`;
+        updateNavBadge();
+      }
+    })
+    .catch(() => showToast('數量更新失敗，請稍後再試', true));
+  }
+
+  function removeItem(id) {
+    fetch(`/cart/${id}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        cartItems = cartItems.filter(i => i.id !== id);
+        renderCart();
+        updateNavBadge();
+        showToast('已移除商品');
+      }
+    })
+    .catch(() => showToast('商品移除失敗，請稍後再試', true));
+  }
+
+  function checkout() {
+    const btn = document.querySelector('.btn-checkout');
+    btn.disabled = true;
+    btn.textContent = '處理中...';
+    fetch('/checkout', { method: 'POST' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        showToast(`訂單 #${data.orderId} 已成立！`);
+        showCheckoutModal(data.orderId);
+        cartItems = [];
+        renderCart();
+        updateNavBadge();
+        loadOrders();
+      } else {
+        showToast(data.message, true);
+        btn.disabled = false;
+        btn.textContent = '確認結帳';
+      }
+    })
+    .catch(() => {
+      showToast('結帳失敗，請稍後再試', true);
+      btn.disabled = false;
+      btn.textContent = '確認結帳';
+    });
+  }
+
+  function loadOrders() {
+    fetch('/orders')
+    .then(r => r.json())
+    .then(data => {
+      const el = document.getElementById('orders-content');
+      if (!data.orders || !data.orders.length) {
+        el.innerHTML = '<p style="color:#6b7280;font-size:15px">尚無訂單紀錄</p>';
+        return;
+      }
+      el.innerHTML = data.orders.map(o => `
+        <div class="order-card" id="order-${o.id}">
+          <div class="order-header">
+            <span class="order-id">訂單 #${o.id}</span>
+            <span class="order-amount">${formatPrice(o.總金額)}</span>
+          </div>
+          <span class="order-status">${o.狀態}</span>
+          <div class="order-time">${o.時間}</div>
+          <button class="btn-del-order" onclick="deleteOrder(${o.id}, this)">刪除訂單</button>
+        </div>`).join('');
+    })
+    .catch(() => {
+      document.getElementById('orders-content').innerHTML = '<p style="color:#98a3a9;font-size:15px">訂單載入失敗，請重新整理頁面</p>';
+    });
+  }
+
+  function updateNavBadge() {
+    fetch('/cart/count')
+    .then(r => r.json())
+    .then(d => {
+      const badge = document.getElementById('cart-badge');
+      if (window.updateSharedCartBadge) window.updateSharedCartBadge(Number(d.count) || 0);
+      else if (badge) {
+        badge.textContent = d.count > 0 ? d.count : '';
+        badge.style.display = d.count > 0 ? 'flex' : 'none';
+      }
+    })
+    .catch(() => {});
+  }
+
+  function deleteOrder(id, btn) {
+    btn.disabled = true;
+    btn.textContent = '刪除中...';
+    fetch(`/orders/${id}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById(`order-${id}`).remove();
+        showToast('訂單已刪除');
+        const el = document.getElementById('orders-content');
+        if (!el.querySelector('.order-card'))
+          el.innerHTML = '<p style="color:#6b7280;font-size:15px">尚無訂單紀錄</p>';
+      } else {
+        showToast(data.message || '刪除失敗', true);
+        btn.disabled = false;
+        btn.textContent = '刪除訂單';
+      }
+    })
+    .catch(() => {
+      showToast('訂單刪除失敗，請稍後再試', true);
+      btn.disabled = false;
+      btn.textContent = '刪除訂單';
+    });
+  }
+
+  // 初始載入
+  fetch('/cart')
+  .then(r => {
+    if (r.status === 401) {
+      window.location.assign('/loginpage?next=/cart.html');
+      return null;
+    }
+    return r.ok ? r.json() : Promise.reject(new Error('load failed'));
+  })
+  .then(data => {
+    if (!data) return;
+    cartItems = data.items || [];
+    renderCart();
+  })
+  .catch(() => {
+    document.getElementById('cart-subtitle').textContent = '載入失敗';
+    document.getElementById('cart-content').innerHTML = '<div class="empty-state">購物車暫時無法載入，請重新整理頁面。</div>';
+  });
+
+  loadOrders();
+</script>
+</body>
+</html>

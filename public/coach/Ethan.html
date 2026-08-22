@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethan 教練 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin: 32px 40px; padding: 9px 18px;
+      border: 1px solid #e5e7eb; border-radius: 8px;
+      color: #6b7280; text-decoration: none; font-size: 14px;
+      transition: all .2s; background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .back-btn:hover { border-color: #ea580c; color: #ea580c; }
+
+    .profile-wrap {
+      max-width: 860px; margin: 0 auto; padding: 0 24px 80px;
+      display: flex; gap: 48px; align-items: flex-start;
+    }
+
+    .profile-left { flex-shrink: 0; text-align: center; }
+    .avatar {
+      width: 160px; height: 160px; border-radius: 50%;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; font-weight: 700; color: #fff;
+      margin: 0 auto 20px; overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .coach-name { font-size: 24px; font-weight: 700; color: #111827; }
+    .coach-role {
+      display: inline-block; margin-top: 10px;
+      font-size: 13px; padding: 4px 14px; border-radius: 20px;
+      background: rgba(234,88,12,.1); color: #ea580c;
+      border: 1px solid rgba(234,88,12,.2);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+    .tag {
+      font-size: 12px; padding: 3px 10px; border-radius: 20px;
+      background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb;
+    }
+
+    .profile-right { flex: 1; }
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+      color: #ea580c; margin-bottom: 16px;
+    }
+    .bio-title {
+      font-size: 28px; font-weight: 700; margin-bottom: 24px;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .bio p {
+      font-size: 15px; color: #6b7280; line-height: 1.9; margin-bottom: 16px;
+    }
+
+    .divider { width: 1px; background: #e5e7eb; align-self: stretch; }
+
+    @media (max-width: 680px) {
+      .profile-wrap { flex-direction: column; align-items: center; }
+      .divider { display: none; }
+      .back-btn { margin: 20px 16px; }
+    }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; margin-top: 40px; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<a class="back-btn" href="/index1.html">← 返回教練介紹</a>
+
+<div class="profile-wrap">
+  <div class="profile-left">
+    <div class="avatar">
+      <img src="/img/wei.jpg" alt="Ethan 教練" onerror="this.style.display='none';this.parentElement.textContent='E'">
+    </div>
+    <div class="coach-name">Ethan 教練</div>
+    <div class="coach-role">重量訓練專家</div>
+    <div class="tags">
+      <span class="tag">舉重</span>
+      <span class="tag">增肌</span>
+      <span class="tag">體能訓練</span>
+      <span class="tag">傷痛康復</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="profile-right">
+    <div class="section-label">Coach Profile</div>
+    <div class="bio-title">重量訓練教練介紹</div>
+    <div class="bio">
+      <p>Ethan 教練是我們的重量訓練專家，擁有多年的教學經驗和豐富的知識。他致力於幫助客戶通過重量訓練提高肌肉力量、增加肌肉量並改善體能。他的訓練課程結合了科學訓練原則和個性化的指導，讓每個學員都能達到最佳效果。</p>
+      <p>Ethan 教練擅長設計各種重量訓練課程，包括舉重、啞鈴、槓鈴等複合動作訓練，並根據客戶的需求制定個性化的健身計劃。他對於體能訓練、肌肉塑造和傷痛康復等領域有豐富的經驗，能夠為學員提供專業的指導和建議。</p>
+    </div>
+  </div>
+</div>
+
+<footer>&copy; 2024 健身工作坊. All rights reserved.</footer>
+</body>
+</html>

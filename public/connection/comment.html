@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回饋問卷 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
+
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .page-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .page-header p { color: #6b7280; margin-top: 10px; font-size: 15px; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    .form-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .form-card h2 { font-size: 18px; color: #ea580c; margin-bottom: 20px; font-weight: 700; }
+
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .field input[type="date"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #111827;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color .2s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: #ea580c;
+      box-shadow: 0 0 0 3px rgba(234,88,12,.12);
+      background: #fff;
+    }
+    .field textarea { resize: vertical; min-height: 100px; }
+
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .checkbox-item:hover { border-color: #ea580c; }
+    .checkbox-item input { accent-color: #ea580c; }
+    .checkbox-item span { font-size: 14px; color: #374151; }
+
+    .radio-group { display: flex; gap: 16px; }
+    .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .radio-item input { accent-color: #ea580c; }
+    .radio-item span { font-size: 14px; color: #374151; }
+
+    .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .btn {
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-primary { background: #ea580c; color: #fff; }
+    .btn-primary:hover { background: #c2410c; box-shadow: 0 4px 16px rgba(234,88,12,.3); }
+    .btn-outline { background: transparent; border: 1px solid #e5e7eb; color: #6b7280; }
+    .btn-outline:hover { border-color: #ea580c; color: #ea580c; }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="page-header">
+  <h1>滿意度調查問卷</h1>
+  <p>您的回饋幫助我們持續進步</p>
+</div>
+
+<div class="container">
+
+  <form id="feedback-form">
+    <div class="form-card">
+      <h2>基本資訊</h2>
+      <div class="field">
+        <label for="date">使用日期</label>
+        <input type="date" name="date" id="date">
+      </div>
+      <div class="field">
+        <label for="duration">使用時數（小時）</label>
+        <input type="number" name="duration" id="duration" min="0.5" max="24" step="0.5" placeholder="例：2">
+      </div>
+      <div class="field">
+        <label for="age-group">年齡層</label>
+        <select name="age-group" id="age-group">
+          <option value="">請選擇</option>
+          <option value="20以下">20 歲以下</option>
+          <option value="20-30">20 – 30 歲</option>
+          <option value="30-40">30 – 40 歲</option>
+          <option value="40-50">40 – 50 歲</option>
+          <option value="50以上">50 歲以上</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>使用器材（可複選）</h2>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="equipment" value="啞鈴"><span>啞鈴</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="equipment" value="槓鈴"><span>槓鈴</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="equipment" value="慢跑機"><span>慢跑機</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="equipment" value="腿推機"><span>腿推機</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="equipment" value="飛輪"><span>飛輪</span></label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>器材滿意度</h2>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="equip-sat" value="yes"><span>滿意</span></label>
+        <label class="radio-item"><input type="radio" name="equip-sat" value="no"><span>不滿意</span></label>
+      </div>
+      <div class="field" style="margin-top:16px">
+        <label for="equip-comment">改進意見</label>
+        <textarea name="equip-comment" id="equip-comment" placeholder="請填寫您對器材的建議..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>課程滿意度（可複選）</h2>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="course" value="上肢"><span>上肢課程</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="course" value="下肢"><span>下肢課程</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="course" value="核心"><span>核心課程</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="course" value="有氧"><span>有氧課程</span></label>
+        <label class="checkbox-item"><input type="checkbox" name="course" value="其他"><span>其他課程</span></label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>教練教學滿意度</h2>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="coach-sat" value="yes"><span>滿意</span></label>
+        <label class="radio-item"><input type="radio" name="coach-sat" value="no"><span>不滿意</span></label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>其他意見</h2>
+      <div class="field">
+        <label for="comment">請留下您的想法</label>
+        <textarea name="comment" id="comment" placeholder="任何建議都歡迎！"></textarea>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-outline" href="connection1.html">返回</a>
+        <button class="btn btn-primary" id="feedback-submit" type="submit">送出問卷</button>
+      </div>
+      <p class="form-status" id="feedback-status" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+
+</div>
+
+<footer>&copy; 2024 健身工作坊. All rights reserved.</footer>
+<script>
+  const feedbackForm = document.getElementById('feedback-form');
+  const feedbackStatus = document.getElementById('feedback-status');
+  const feedbackButton = document.getElementById('feedback-submit');
+
+  feedbackForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const formData = new FormData(feedbackForm);
+    const payload = {
+      使用日期: formData.get('date'),
+      使用時數: formData.get('duration'),
+      年齡層: formData.get('age-group'),
+      使用器材: formData.getAll('equipment'),
+      器材滿意度: formData.get('equip-sat'),
+      器材意見: formData.get('equip-comment'),
+      課程: formData.getAll('course'),
+      教練滿意度: formData.get('coach-sat'),
+      其他意見: formData.get('comment')
+    };
+
+    feedbackStatus.className = 'form-status';
+    feedbackStatus.style.display = 'none';
+    feedbackButton.disabled = true;
+    feedbackButton.textContent = '送出中…';
+
+    try {
+      const response = await fetch('/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) throw new Error(data.message || '回饋送出失敗，請稍後再試');
+      feedbackForm.reset();
+      feedbackStatus.textContent = data.message;
+      feedbackStatus.className = 'form-status success';
+    } catch (error) {
+      feedbackStatus.textContent = error.message;
+      feedbackStatus.style.display = 'block';
+    } finally {
+      feedbackButton.disabled = false;
+      feedbackButton.textContent = '送出問卷';
+    }
+  });
+</script>
+</body>
+</html>

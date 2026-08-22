@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊 - 健身工作坊</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f9fafb;
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            color: #111827;
+        }
+
+        .wrapper {
+            width: 420px;
+            padding: 48px 40px;
+            background: #ffffff;
+            box-shadow: 0 8px 40px rgba(0,0,0,.1);
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .wrapper h2 {
+            margin-bottom: 28px;
+            font-size: 20px;
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            color: #111827;
+            outline: none;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.2s ease-in-out;
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+        }
+
+        .input-group input:focus {
+            border-color: #ea580c;
+            box-shadow: 0 0 0 3px rgba(234,88,12,.12);
+            background: #fff;
+        }
+
+        .input-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ea580c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            transition: all 0.2s ease-in-out;
+            display: block;
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+        }
+
+        button:hover {
+            background: #c2410c;
+            box-shadow: 0 4px 16px rgba(234,88,12,.3);
+        }
+
+        .signUp-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .signUp-link a {
+            color: #ea580c;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .signUp-link a:hover {
+            color: #c2410c;
+        }
+
+        #errorMsg {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+    </style>
+    <link rel="stylesheet" href="/theme.css">
+</head>
+<body class="auth-page">
+    <div class="wrapper">
+        <div class="auth-kicker">START YOUR JOURNEY</div>
+        <div class="brand">健身工作坊</div>
+        <form id="signUpForm">
+            <h2>建立帳號</h2>
+            <div class="input-group">
+                <input type="text" id="inputA" name="username" required placeholder="設定帳號" maxlength="50" autocomplete="username" aria-label="帳號">
+            </div>
+            <div class="input-group">
+                <input type="email" id="inputB" name="email" required placeholder="電子信箱" maxlength="120" autocomplete="email" aria-label="電子信箱">
+            </div>
+            <div class="input-group">
+                <input type="password" id="inputC" name="password" required placeholder="密碼（至少 6 個字元）" minlength="6" maxlength="72" autocomplete="new-password" aria-label="密碼">
+            </div>
+            <button type="submit" id="SignUp">建立帳號</button>
+            <p id="errorMsg" role="alert" aria-live="polite"></p>
+            <div class="signUp-link">
+                <p>已經有帳號？ <a href="/loginpage">返回登入</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function signUp(event) {
+            event.preventDefault();
+            const username = document.getElementById('inputA').value.trim();
+            const email = document.getElementById('inputB').value.trim();
+            const password = document.getElementById('inputC').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const button = document.getElementById('SignUp');
+
+            errorMsg.style.display = 'none';
+            if (!username || !email || !password) {
+                errorMsg.textContent = '請填寫所有欄位';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            if (password.length < 6) {
+                errorMsg.textContent = '密碼至少需要 6 個字元';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = '建立中…';
+            try {
+                const response = await fetch('/addUser', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 帳號: username, 信箱: email, 密碼: password })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok || !data.success) throw new Error(data.message || '註冊失敗，請稍後再試');
+                window.location.assign('/loginpage?registered=1');
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorMsg.style.display = 'block';
+                button.disabled = false;
+                button.textContent = '建立帳號';
+            }
+        }
+
+        document.getElementById('signUpForm').addEventListener('submit', signUp);
+    </script>
+</body>
+</html>

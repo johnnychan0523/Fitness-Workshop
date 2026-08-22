@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>關於我們 - 健身工作坊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f9fafb; color: #111827; }
+
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .page-header h1 {
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .page-header p { color: #6b7280; margin-top: 12px; font-size: 16px; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    .mission {
+      background: rgba(234,88,12,.08);
+      border: 1px solid rgba(234,88,12,.2);
+      border-radius: 14px;
+      padding: 36px 40px;
+      margin-bottom: 48px;
+    }
+    .mission h2 { font-size: 22px; color: #ea580c; margin-bottom: 14px; font-weight: 700; }
+    .mission p { color: #374151; line-height: 1.9; font-size: 15px; }
+
+    .team-title { font-size: 26px; font-weight: 700; margin-bottom: 24px; color: #111827; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+
+    .coach-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-decoration: none;
+      color: inherit;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .coach-card:hover {
+      border-color: rgba(234,88,12,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(234,88,12,.15);
+    }
+    .coach-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .coach-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .coach-name { font-size: 18px; font-weight: 700; color: #111827; }
+    .coach-role {
+      font-size: 12px;
+      color: #ea580c;
+      background: rgba(234,88,12,.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(234,88,12,.2);
+    }
+    .coach-desc { font-size: 13px; color: #6b7280; line-height: 1.7; }
+
+    footer { text-align: center; padding: 28px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+<div class="page-header">
+  <h1>關於我們</h1>
+  <p>專業團隊，致力於幫助每位學員達成健康目標</p>
+</div>
+
+<div class="container">
+  <div class="mission">
+    <h2>我們的使命</h2>
+    <p>健身工作坊是一個致力於提供專業健身資訊和課程的健身中心。我們相信每個人都應該有機會享受健康和活力的生活。我們的使命是為客戶提供優質的健身服務，幫助他們實現健康目標，並提高生活質量。</p>
+  </div>
+
+  <div class="team-title">教練團隊</div>
+  <div class="team-grid">
+
+    <a class="coach-card" href="/coach/Johnny.html">
+      <div class="coach-avatar"><img src="/img/johnny.jpg" alt="Johnny" onerror="this.style.display='none';this.parentElement.textContent='J'"></div>
+      <div class="coach-name">Johnny 醫師</div>
+      <div class="coach-role">營養師</div>
+      <div class="coach-desc">擁有豐富的營養學知識，幫助客戶制定健康飲食計劃，提供個性化營養建議。</div>
+    </a>
+
+    <a class="coach-card" href="/coach/Yuchen.html">
+      <div class="coach-avatar"><img src="/img/yuchen.jpg" alt="Yuchen" onerror="this.style.display='none';this.parentElement.textContent='Y'"></div>
+      <div class="coach-name">Yuchen 教練</div>
+      <div class="coach-role">有氧運動專家</div>
+      <div class="coach-desc">多年有氧教學經驗，擅長跑步、游泳、有氧舞蹈等課程設計。</div>
+    </a>
+
+    <a class="coach-card" href="/coach/Ethan.html">
+      <div class="coach-avatar"><img src="/img/wei.jpg" alt="Ethan" onerror="this.style.display='none';this.parentElement.textContent='E'"></div>
+      <div class="coach-name">Ethan 教練</div>
+      <div class="coach-role">重量訓練專家</div>
+      <div class="coach-desc">專精重量訓練，結合科學訓練原則，幫助學員有效增肌與體能提升。</div>
+    </a>
+
+    <a class="coach-card" href="/coach/Henry.html">
+      <div class="coach-avatar"><img src="/img/henry.jpg" alt="Henry" onerror="this.style.display='none';this.parentElement.textContent='H'"></div>
+      <div class="coach-name">Henry 教練</div>
+      <div class="coach-role">健身教練</div>
+      <div class="coach-desc">熟悉各種訓練方法，能根據身體狀況與目標制定個性化訓練計劃。</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>&copy; 2024 健身工作坊. All rights reserved.</footer>
+</body>
+</html>
